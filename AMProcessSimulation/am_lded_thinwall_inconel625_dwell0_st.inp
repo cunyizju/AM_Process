@@ -1,0 +1,132 @@
+*HEADING
+ Structural analysis of printing a 42-layer thinwall (LDED, Inconel625) 
+ Inter-layer dwell time 0s
+** Units: <mm,N,tonne,s,Celsius>
+**------------------------------------------------
+*INCLUDE, INPUT=ABQ_am_special_purpose_types.inp
+**------------------------------------------------
+*INCLUDE, INPUT = mesh_thinwall_st.inp
+*SOLID SECTION, MATERIAL=Inconel625, ELSET=PartToFabricate
+*SOLID SECTION, MATERIAL=Inconel625, ELSET=Substrate
+*SOLID SECTION, MATERIAL=Aluminum, 	 ELSET=Clamp
+*ELEMENT PROGRESSIVE ACTIVATION, NAME="LDED.Printing", ELSET=PartToFabricate
+**------------------------------------------------
+*MATERIAL, NAME=Aluminum
+*ELASTIC
+** Unit: MPa, -
+ 70E3, 0.35
+*EXPANSION
+** Unit: /C
+ 23.1E-6
+**
+*MATERIAL, NAME=Inconel625
+*ELASTIC
+** Unit: MPa, -
+ 208e+03, 0.366,  20. 
+ 204e+03, 0.366,  93. 
+ 198e+03, 0.366, 205. 
+ 192e+03, 0.366, 315. 
+ 186e+03, 0.366, 425. 
+ 179e+03, 0.366, 540. 
+ 170e+03, 0.366, 650. 
+ 161e+03, 0.366, 760. 
+ 148e+03, 0.366, 870. 
+*EXPANSION
+** Unit: /C
+ 12.8e-06,   20.
+ 12.8e-06,   93.
+ 13.1e-06,  205.
+ 13.3e-06,  315.
+ 13.7e-06,  425.
+ 14.0e-06,  540.
+ 14.8e-06,  650.
+ 15.3e-06,  760.
+ 15.8e-06,  870.
+*PLASTIC
+** Unit: MPa, -
+ 493., 0.,20.
+ 479., 0.,93.
+ 443., 0.,205.
+ 430., 0.,315.
+ 424., 0.,425.
+ 423., 0.,540.
+ 422., 0.,650.
+ 415., 0.,760.
+ 386., 0.,870.
+**------------------------------------------------
+**Material Deposition
+*PARAMETER
+ beadWidth      = 3.35
+ beadHeight     = 0.9071
+**
+*TABLE COLLECTION, NAME="ABQ_AM.MaterialDeposition"
+*PARAMETER TABLE, TYPE= "ABQ_AM_MaterialDeposition"
+ "LDED.PrintHeadDepositionTrajectory","Bead"
+**
+*PARAMETER TABLE,  TYPE= "ABQ_AM_MaterialDeposition_Bead"
+ "Z", <beadHeight>, <beadWidth>, 0.,"Below"
+**
+*PARAMETER TABLE,  TYPE= "ABQ_AM_MaterialDeposition_Advanced"
+ "Full",0.0,0.0,0.01,,,
+**------------------------------------------------
+*Event Series, Name="LDED.PrintHeadDepositionTrajectory",
+               Type="ABQ_AM_MaterialDeposition",
+               Time=Total, input=es_thinwall_dwell0.inp
+**------------------------------------------------
+*INITIAL CONDITIONS,TYPE=TEMPERATURE
+ PartToFabricate, 1290.
+ Substrate, 26.
+ Clamp, 26.
+*BOUNDARY
+ ClampBottom, 1, 3
+ ClampTop, 1, 3
+**------------------------------------------------
+*STEP,INC=80000, NAME=Printing, EXTRAPOLATION=NO
+*STATIC
+ 0.5, 1794.24, 0.5e-10,0.5
+*ACTIVATE ELEMENTS,ACTIVATION="LDED.Printing", EXPANSION TIME CONSTANT=0.5
+ "ABQ_AM.MaterialDeposition"
+*TEMPERATURE, FILE=am_lded_thinwall_inconel625_dwell0_ht.odb, BSTEP=1
+*OUTPUT,FIELD,FREQ=200
+*NODE OUTPUT
+ U
+*OUTPUT,FIELD,FREQ=200
+*ELEMENT OUTPUT
+ S, E, PEEQ
+*OUTPUT, HISTORY,FREQ=1
+*NODE OUTPUT, NSET=NOutputLDS
+ U3
+*END STEP
+**------------------------------------------------
+*STEP, INC=80000, NAME=Cooling, EXTRAPOLATION=NO
+*STATIC
+ 10, 500, 10E-10, 10
+*TEMPERATURE, FILE=am_lded_thinwall_inconel625_dwell0_ht.odb, BSTEP=2
+*OUTPUT,FIELD,NUMBER INTERVAL=5
+*NODE OUTPUT
+ U
+*OUTPUT,FIELD,NUMBER INTERVAL=5
+*ELEMENT OUTPUT
+ S, E, PEEQ
+*OUTPUT, HISTORY,FREQ=1
+*NODE OUTPUT, NSET=NOutputLDS
+ U3
+*END STEP
+**------------------------------------------------
+*STEP, INC=80000, NAME=MoreCooling, EXTRAPOLATION=NO
+*STATIC
+ 100, 10000, 100E-10, 100
+*TEMPERATURE, FILE=am_lded_thinwall_inconel625_dwell0_ht.odb, BSTEP=3
+*CONTROLS, PARAMETERS=FIELD
+ , 1.
+*OUTPUT,FIELD,NUMBER INTERVAL=5
+*NODE OUTPUT
+ U
+*OUTPUT,FIELD,NUMBER INTERVAL=5
+*ELEMENT OUTPUT
+ S, E, PEEQ
+*OUTPUT, HISTORY,FREQ=1
+*NODE OUTPUT, NSET=NOutputLDS
+ U3
+*END STEP
+**===================================================================
