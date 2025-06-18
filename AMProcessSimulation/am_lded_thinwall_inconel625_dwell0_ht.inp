@@ -106,7 +106,7 @@
 **------------------------------------------------
 *STEP,INC=80000, NAME=Printing, UNSYMM=YES, EXTRAPOLATION=NO
 *HEAT TRANSFER
- 0.5, 1794.24, 0.5e-10,0.5
+ 0.5, 100, 0.5e-10,0.5
 *ACTIVATE ELEMENTS,ACTIVATION="LDED.Printing"
  "ABQ_AM.MaterialDeposition"
 *DFLUX

@@ -83,7 +83,7 @@
 **------------------------------------------------
 *STEP,INC=80000, NAME=Printing, EXTRAPOLATION=NO
 *STATIC
- 0.5, 1794.24, 0.5e-10,0.5
+ 0.5, 100, 0.5e-10,0.5
 *ACTIVATE ELEMENTS,ACTIVATION="LDED.Printing", EXPANSION TIME CONSTANT=0.5
  "ABQ_AM.MaterialDeposition"
 *TEMPERATURE, FILE=am_lded_thinwall_inconel625_dwell0_ht.odb, BSTEP=1
