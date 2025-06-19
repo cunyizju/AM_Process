@@ -1,0 +1,176 @@
+*HEADING
+ Structural analysis of the NIST AM benchmark problem 
+ (AMB2018-01, bridge structure)
+**------------------------------------------------
+** PARTS
+**
+*Part, name=BRIDGE
+** *Node and *Nset
+*Include, input=node_bridge_part.inp
+** *Element and *Elset
+*Element, type=C3D8
+*Include, input=elem_bridge_part.inp
+*End Part
+**  
+*Part, name=SUBSTRATE
+** *Node and *Nset
+*Include, input=node_bridge_substrate.inp
+** *Element and *Elset
+*Element, type=C3D8R
+*Include, input=elem_bridge_substrate.inp
+*End Part
+**------------------------------------------------
+** ASSEMBLY
+**
+*Assembly, name=Assembly
+**  
+*Instance, name=BRIDGE-1, part=BRIDGE
+** Section: IN625
+*ORIENTATION, name=Global
+ 1,0,0,0,1,0
+ 1,0
+*Solid Section, elset=ALL, material=IN625, orientation=Global
+*End Instance
+**  
+*Instance, name=SUBSTRATE-1, part=SUBSTRATE
+        -2.5,          -5.,        -12.7
+** Section: IN625
+*ORIENTATION, name=Global
+ 1,0,0,0,1,0
+ 1,0
+*Solid Section, elset=ALL, material=IN625, orientation=Global
+*End Instance
+**  
+*Nset, nset=ALL
+ BRIDGE-1.ALL, SUBSTRATE-1.ALL
+*Elset, elset=ALL
+ BRIDGE-1.ALL, SUBSTRATE-1.ALL
+*Surface, type=NODE, name=SUBSTRATE-1_TOP_SURF_CNS_, internal
+ SUBSTRATE-1.TOP_SURF, 1.
+*Surface, type=NODE, name=BRIDGE-1_BOTTOM_SURF_CNS_, internal
+ BRIDGE-1.BOTTOM_SURF, 1.
+** Constraint: PART2SUB
+*Tie, name=PART2SUB, adjust=yes
+ BRIDGE-1_BOTTOM_SURF_CNS_, SUBSTRATE-1_TOP_SURF_CNS_
+*ELEMENT PROGRESSIVE ACTIVATION,NAME="Material Input1",ELSET=BRIDGE-1.ALL,FOLLOW=YES
+*End Assembly
+**------------------------------------------------
+*PHYSICAL CONSTANTS, ABSOLUTE ZERO=-273, STEFAN BOLTZMANN=5.670373e-11
+**------------------------------------------------
+*MATERIAL, NAME=IN625
+*Conductivity
+  9.8, 21.
+ 10.1, 38.
+ 10.8, 93.
+ 12.5,204.
+ 14.1,316.
+ 15.7,427.
+ 17.5,538.
+  19.,649.
+ 20.8,760.
+ 22.8,871.
+ 25.2,982.
+*Density
+ 8.44e-09,
+*Elastic
+ 207500., 0.278,   21.
+ 204100.,  0.28,   93.
+ 197900., 0.286,  204.
+ 191700.,  0.29,  316.
+ 185500., 0.295,  427.
+ 178600., 0.305,  538.
+ 170300., 0.321,  649.
+ 160600.,  0.34,  760.
+ 147500., 0.336,  871.
+*Expansion, ZERO=25.
+ 1.28e-05, 93.
+ 1.31e-05, 204.
+ 1.33e-05, 316.
+ 1.37e-05, 427.
+ 1.4e-05, 538.
+ 1.48e-05, 649.
+ 1.53e-05,760.
+ 1.58e-05, 871.
+ 1.62e-05, 927.
+*Specific Heat
+  4.1e+08,  21.
+ 4.27e+08,  93.
+ 4.56e+08, 204.
+ 4.81e+08, 316.
+ 5.11e+08, 427.
+ 5.36e+08, 538.
+ 5.65e+08, 649.
+  5.9e+08, 760.
+  6.2e+08, 871.
+ 6.45e+08, 982.
+  6.7e+08,1093.
+*Latent Heat,SMOOTH
+ 272E9, 1290., 1350.
+*PLASTIC
+ 725, 0.
+ 990, 0.35
+*POTENTIAL
+ 1,1,0.8483,1,1,1
+**------------------------------------------------
+*INCLUDE, INPUT=ABQ_am_special_purpose_types.inp
+**------------------------------------------------
+*EVENT SERIES,  NAME="DELMIA_Roller_Data1", TIME = TOTAL, TYPE="ABQ_AM_MaterialDeposition", input=es_bridge_roller.inp
+**------------------------------------------------
+*TABLE COLLECTION, NAME="ABQ_AM.Material Input.1"
+*PARAMETER TABLE,  TYPE="ABQ_AM_MaterialDeposition"
+ "DELMIA_Roller_Data1",
+ "Roller",
+*PARAMETER TABLE,  TYPE="ABQ_AM_MaterialDeposition_Advanced"
+ "Full", 0., 0., 0.,,,
+**------------------------------------------------
+*INITIAL CONDITIONS, TYPE=TEMPERATURE
+ BRIDGE-1.ALL,750
+*INITIAL CONDITIONS, TYPE=TEMPERATURE
+ SUBSTRATE-1.ALL,80
+*TIME POINTS, NAME=BuildEachLayer
+ 416.78, 832.78, 1248.78, 1664.078, 2080.78, 2496.78, 2912.78, 3328.78 
+ 3744.78, 4160.78, 4576.78, 4992.78, 5408.78, 5824.78, 6240.78, 6656.78 
+ 7072.78, 7488.78, 7904.78, 8320.78, 8736.78, 9152.78, 9568.78, 9984.78
+ 10400.78, 10816.78, 11232.78, 11648.78, 12064.78, 12480.78, 12896.78, 13312.78
+ 13728.78, 14144.78, 14560.78, 14976.78, 15392.78, 15808.78, 16224.78, 16640.78
+ 17056.78, 17472.78, 17888.78, 18304.78, 18720.78, 19136.78, 19552.78, 19968.78 
+ 20384.78, 20800.78, 21216.78, 21632.78, 22048.78, 22464.78, 22880.78, 23296.78
+ 23712.78, 24128.78, 24544.78, 24960.78, 25376.78, 25792.78, 26208.78, 26624.78
+ 27040.78, 27456.78, 27872.78, 28288.78, 28704.78, 29120.78, 29536.78, 29952.78
+ 30368.78, 30784.78, 31200.78, 31616.78, 32032.78, 32448.78, 32853.36, 33053.36	
+**------------------------------------------------
+*STEP, NAME=PRINT, AMPLITUDE=RAMP, EXTRAPOLATION=NO, INC=10000, NLGEOM=YES
+*STATIC
+ 20, 33053.36, 1e-05, 1000
+*TEMPERATURE, OP=NEW, FILE="am_bridge_thermal_analysis", INTERPOLATE, EXTERIOR TOLERANCE=0.5, BSTEP=1
+*BOUNDARY, OP=NEW
+ SUBSTRATE-1.BOTTOM_SURF, ENCASTRE
+*ACTIVATE ELEMENTS, ACTIVATION="Material Input1", EXPANSION TIME CONST=80.
+ "ABQ_AM.Material Input.1"
+**
+*OUTPUT, FIELD, TIME POINTS=BuildEachLayer, TIME MARKS=YES 
+*NODE OUTPUT
+ U,UACT
+***ELEMENT OUTPUT
+** S, LE, EE, PEEQ, PE
+*OUTPUT, FIELD, NUMBER INTERVAL=1
+*ELEMENT OUTPUT
+ EE, S
+*OUTPUT, HISTORY, FREQUENCY=0
+*END STEP
+**------------------------------------------------
+*STEP,INC=10000, NAME=CUT, NLGEOM=YES
+*STATIC
+ 1e-5,1e-5,1e-7,1e-5
+*MODEL CHANGE, REMOVE
+ SUBSTRATE-1.REMOVE,
+**
+*OUTPUT, FIELD, FREQUENCY=1 
+*NODE OUTPUT
+ U,UACT
+*ELEMENT OUTPUT
+ EE, S
+** LE, EE, PEEQ, PE
+*OUTPUT, HISTORY, FREQUENCY=0
+*END STEP
+**------------------------------------------------
