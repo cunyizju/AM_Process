@@ -1,31 +1,23 @@
 @echo off
-REM ============================================
-REM Abaqus 2024 - Fetch AM Heat Balance Examples
-REM ============================================
+REM =====================================================
+REM Fetch Moving Heat Source (5-Axis) Simulation Examples
+REM =====================================================
 
-echo Fetching trajectory-based input files...
-abaqus fetch job=am_heatbalance_dc3d4_concentrated
-abaqus fetch job=am_heatbalance_dc3d4_uniform
-abaqus fetch job=am_heatbalance_dc3d4_goldak
-abaqus fetch job=am_heatbalance_dc3d8_concentrated
-abaqus fetch job=am_heatbalance_dc3d8_uniform
-abaqus fetch job=am_heatbalance_dc3d8_goldak
+echo Fetching moving heat source input files...
 
-echo Fetching pattern-based input files...
-abaqus fetch job=am_heatbalance_dc3d4_patternbased_full
-abaqus fetch job=am_heatbalance_dc3d4_patternbased_partial
-abaqus fetch job=am_heatbalance_dc3d4_patternbased_iniact
-abaqus fetch job=am_heatbalance_dc3d8_patternbased_full
-abaqus fetch job=am_heatbalance_dc3d8_patternbased_partial
-abaqus fetch job=am_heatbalance_dc3d8_patternbased_iniact
+abaqus fetch job=movHeat5AxisVarBead
+abaqus fetch job=movHeat5AxisNoRot_noTilt
+abaqus fetch job=movHeat5AxisNoRot_withTilt
+abaqus fetch job=movHeat5Axis
+abaqus fetch job=movHeatNoRotVarBead
 
-echo Fetching supporting include/input files...
+echo Fetching shared include files...
+abaqus fetch job=elemsAM
+abaqus fetch job=nodesAM
 abaqus fetch job=ABQ_am_special_purpose_types
-abaqus fetch job=es_heatbalance_laser
-abaqus fetch job=es_heatbalance_roller
 
-echo ============================================
-echo Fetch complete. Files saved in:
+echo =====================================================
+echo Fetch complete. All files saved to:
 echo %cd%
-echo ============================================
+echo =====================================================
 pause
