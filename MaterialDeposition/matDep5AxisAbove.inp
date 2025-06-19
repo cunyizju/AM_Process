@@ -1,0 +1,87 @@
+*Heading
+*Node, nset=nall
+*Include, input="nodesAM.inp"
+*Element, type=DC3D8, elset=eall
+*Include, input="elemsAM.inp"
+**
+**----------------------------------------------------------------------------------------------
+**
+*PHYSICAL CONSTANTS, ABSOLUTE ZERO=0., STEFAN BOLTZMANN=5.670373e-11
+*MATERIAL, NAME=mat
+*CONDUCTIVITY, TYPE=ISO
+ 5.70496e-3
+*SPECIFIC HEAT
+ 543917000.
+*DENSITY
+ 4.43e-09
+**----------------------------------------------------------------------------------------------
+**
+*Include, input="ABQ_am_special_purpose_types.inp"
+**
+*EVENT SERIES,  NAME="rotatingPath", TIME = STEP, TYPE="ABQ_AM_MaterialDeposition_5AxisStrategy"
+**
+**    Time          X          Y          Z     On/Off         Nx         Ny         Nz
+**
+         0,         0,         0,         0,    1.0000,    1.0000,         0,         0
+    0.5000,         0,         0,    0.5000,    1.0000,    0.9511,    0.3090,         0
+    1.0000,         0,         0,    1.0000,    1.0000,    0.8090,    0.5878,         0
+    1.5000,         0,         0,    1.5000,    1.0000,    0.5878,    0.8090,         0
+    2.0000,         0,         0,    2.0000,    1.0000,    0.3090,    0.9511,         0
+    2.5000,         0,         0,    2.5000,    1.0000,    0.0000,    1.0000,         0
+    3.0000,         0,         0,    3.0000,    1.0000,   -0.3090,    0.9511,         0
+    3.5000,         0,         0,    3.5000,    1.0000,   -0.5878,    0.8090,         0
+    4.0000,         0,         0,    4.0000,    1.0000,   -0.8090,    0.5878,         0
+    4.5000,         0,         0,    4.5000,    1.0000,   -0.9511,    0.3090,         0
+    5.0000,         0,         0,    5.0000,    1.0000,   -1.0000,    0.0000,         0
+    5.5000,         0,         0,    5.5000,    1.0000,   -0.9511,   -0.3090,         0
+    6.0000,         0,         0,    6.0000,    1.0000,   -0.8090,   -0.5878,         0
+    6.5000,         0,         0,    6.5000,    1.0000,   -0.5878,   -0.8090,         0
+    7.0000,         0,         0,    7.0000,    1.0000,   -0.3090,   -0.9511,         0
+    7.5000,         0,         0,    7.5000,    1.0000,   -0.0000,   -1.0000,         0
+    8.0000,         0,         0,    8.0000,    1.0000,    0.3090,   -0.9511,         0
+    8.5000,         0,         0,    8.5000,    1.0000,    0.5878,   -0.8090,         0
+    9.0000,         0,         0,    9.0000,    1.0000,    0.8090,   -0.5878,         0
+    9.5000,         0,         0,    9.5000,    1.0000,    0.9511,   -0.3090,         0
+   10.0000,         0,         0,   10.0000,    1.0000,    1.0000,   -0.0000,         0
+   10.5000,         0,         0,   10.5000,    1.0000,    1.0000,    0.0000,         0
+   11.0000,         0,         0,   11.0000,    1.0000,    1.0000,   -0.0000,         0
+**
+*TABLE COLLECTION, NAME="ABQ_AM_rotatingPath"
+*PARAMETER TABLE,  TYPE="ABQ_AM_MaterialDeposition"
+ "rotatingPath",
+ "Bead",
+*PARAMETER TABLE,  TYPE="ABQ_AM_MaterialDeposition_Bead"
+  "X",
+  1.,
+  2.,
+  0.,
+  "Above",
+*PARAMETER TABLE,  TYPE="ABQ_AM_MaterialDeposition_Advanced"
+  "Full",
+  0.,
+  1.,
+  0.,
+  "No",
+  0,
+*PARAMETER TABLE,  TYPE="ABQ_AM_MaterialDeposition_5AxisStrategy"
+  "True",
+  2,
+  3,
+  4,
+*ELEMENT PROGRESSIVE ACTIVATION, NAME="EPA1", ELSET=eall
+*SOLID SECTION, MATERIAL=mat, ELSET=eall
+  1.
+*INITIAL CONDITIONS, TYPE=TEMPERATURE, section specification=uniform
+ ,300.
+** ------------------------------------
+*STEP, NAME="Transient Heat Transfer Step1", AMPLITUDE=STEP, EXTRAPOLATION=NO, INC=10000, UNSYMM=YES
+*HEAT TRANSFER, DELTMX=5000., MXDEM=0.1
+ 0.5, 11., 1e-05, 0.5
+*ACTIVATE ELEMENTS, ACTIVATION="EPA1"
+ "ABQ_AM_rotatingPath"
+** Output request Output2
+*OUTPUT, FIELD, FREQUENCY=1
+*ELEMENT OUTPUT
+ EACTIVE
+*OUTPUT,HISTORY, FREQ=0
+*END STEP
