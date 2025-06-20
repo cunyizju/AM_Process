@@ -71,7 +71,7 @@
 **------------------------------------------------
 *Event Series, Name="LDED.PrintHeadDepositionTrajectory",
                Type="ABQ_AM_MaterialDeposition",
-               Time=Total, input=es_thinwall_dwell0.inp
+               Time=Total, input=es_thinwall_dwell20.inp
 **------------------------------------------------
 *INITIAL CONDITIONS,TYPE=TEMPERATURE
  PartToFabricate, 1290.
@@ -83,10 +83,10 @@
 **------------------------------------------------
 *STEP,INC=80000, NAME=Printing, EXTRAPOLATION=NO
 *STATIC
- 0.5, 1794.24, 0.5e-10,0.5
+ 0.5, 2634.24, 0.5e-10,0.5
 *ACTIVATE ELEMENTS,ACTIVATION="LDED.Printing", EXPANSION TIME CONSTANT=0.5
  "ABQ_AM.MaterialDeposition"
-*TEMPERATURE, FILE=am_lded_thinwall_inconel625_dwell0_ht.odb, BSTEP=1
+*TEMPERATURE, FILE=am_lded_thinwall_inconel625_dwell20_ht.odb, BSTEP=1
 *OUTPUT,FIELD,FREQ=200
 *NODE OUTPUT
  U
@@ -101,7 +101,7 @@
 *STEP, INC=80000, NAME=Cooling, EXTRAPOLATION=NO
 *STATIC
  10, 500, 10E-10, 10
-*TEMPERATURE, FILE=am_lded_thinwall_inconel625_dwell0_ht.odb, BSTEP=2
+*TEMPERATURE, FILE=am_lded_thinwall_inconel625_dwell20_ht.odb, BSTEP=2
 *OUTPUT,FIELD,NUMBER INTERVAL=5
 *NODE OUTPUT
  U
@@ -116,7 +116,7 @@
 *STEP, INC=80000, NAME=MoreCooling, EXTRAPOLATION=NO
 *STATIC
  100, 10000, 100E-10, 100
-*TEMPERATURE, FILE=am_lded_thinwall_inconel625_dwell0_ht.odb, BSTEP=3
+*TEMPERATURE, FILE=am_lded_thinwall_inconel625_dwell20_ht.odb, BSTEP=3
 *CONTROLS, PARAMETERS=FIELD
  , 1.
 *OUTPUT,FIELD,NUMBER INTERVAL=5
