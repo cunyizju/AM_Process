@@ -115,30 +115,30 @@
  All, FFS, 26., 18e-3
 ** Unit: mW/(mm^2.C)
 *RADIATE
- All, RFS, 26., 0.28
+  All, RFS, 26., 0.28
 *OUTPUT,FIELD,FREQ=1
 *NODE OUTPUT
- NT
+  NT
 *OUTPUT, HISTORY, FREQ=1
 *NODE OUTPUT, NSET=NOutputTC1
- NT
+  NT
 *NODE OUTPUT, NSET=NOutputTC2
- NT
+  NT
 *NODE OUTPUT, NSET=NOutputTC3
- NT
+  NT
 *END STEP
 **------------------------------------------------
 *STEP, INC=80000, NAME=Cooling, UNSYMM=YES, EXTRAPOLATION=NO
 *HEAT TRANSFER
- 10, 500, 10E-10, 10
+  10, 500, 10E-10, 10
 *FILM
- All, FFS, 26., 18e-3
+  All, FFS, 26., 18e-3
 ** Unit: mW/(mm^2.C)
 *RADIATE
- All, RFS, 26., 0.28
+  All, RFS, 26., 0.28
 *OUTPUT,FIELD,FREQ=1
 *NODE OUTPUT
- NT
+  NT
 *OUTPUT, HISTORY, FREQ=1
 *NODE OUTPUT, NSET=NOutputTC1
  NT
