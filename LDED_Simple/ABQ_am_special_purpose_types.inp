@@ -1,0 +1,267 @@
+**HM_UNSUPPORTED_CARDS_START
+*EVENT SERIES TYPE, Fields=1, NAME="ABQ_AM_MaterialDeposition"
+ "On/Off state (on=1, off=0) "
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_MaterialDeposition", PARAMETERS=2
+ STRING, , "Event series"      , ,              ,
+ STRING, , "Deposition process", , "Roller|Bead",
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_MaterialDeposition_Bead", PARAMETERS = 5
+ STRING, , "Stack direction"    , , "X|Y|Z"      ,
+ FLOAT , , "Bead height"        , ,              ,
+ FLOAT , , "Bead width"         , ,              ,
+ FLOAT , , "Activation offset"  , ,              ,
+ STRING, , "Deposition position", , "Below|Above|Middle",
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_MaterialDeposition_Advanced",PARAMETERS = 6
+ STRING, "Partial", "Activation type"              , , "Full|Partial",
+ FLOAT , 0.0      , "Min volume fraction threshold for partial activation", ,               ,
+ FLOAT , 1.0      , "Max volume fraction threshold for partial activation", ,               ,
+ FLOAT , 0.0      , "Max volume fraction threshold for full activation", ,               ,
+ STRING,"Yes"     , "Update orientation for bead type deposition", , ,
+ INTEGER, 0       , "Element subdivision order (set to zero for automatic subdivision order)", ,,
+*PARAMETER TABLE TYPE,  NAME="ABQ_AM_MaterialDeposition_VariableBeadSize", PARAMETERS = 2
+ INTEGER, 5,"ES field ID for height",L,"zero indicates constant bead height"
+ INTEGER, 6,"ES field ID for width",L,"zero indicates constant bead width"
+*EVENT SERIES TYPE, Fields=1, NAME="ABQ_AM_PowerMagnitude"
+ "Power magnitude (unit of JT^-1)"
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_MovingHeatSource", PARAMETERS = 2
+ STRING, , "Event series"       , ,                              ,
+ STRING, , "Energy distribution", , "Concentrated|Uniform|Goldak",
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_MovingHeatSource_Uniform", PARAMETERS=9
+ INTEGER, , "SubDivX"   , , ,
+ INTEGER, , "SubDivY"   , , ,
+ INTEGER, , "SubDivZ"   , , ,
+ FLOAT  , , "OffsetX"   , , ,
+ FLOAT  , , "OffsetY"   , , ,
+ FLOAT  , , "OffsetZ"   , , ,
+ FLOAT  , , "BoxLengthX", , ,
+ FLOAT  , , "BoxLengthY", , ,
+ FLOAT  , , "BoxLengthZ", , ,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_MovingHeatSource_Goldak", PARAMETERS=10
+ INTEGER, , "SubDivX"      , , ,
+ INTEGER, , "SubDivY"      , , ,
+ INTEGER, , "SubDivZ"      , , ,
+ FLOAT  , , "a"            , , ,
+ FLOAT  , , "b"            , , ,
+ FLOAT  , , "cf"           , , ,
+ FLOAT  , , "cr"           , , ,
+ FLOAT  , , "ff"           , , ,
+ FLOAT  , , "fr"           , , ,
+ FLOAT  , , "BoxSizeFactor", , ,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_MovingHeatSource_Advanced", PARAMETERS = 7
+ STRING, "False"   , "Conserve total energy" , , "True|False"       ,
+ STRING, "False"   , "Control increment size", , "True|False"       ,
+ STRING, "Relative", "Offset type"           , , "Absolute|Relative",
+ FLOAT , 0.0       , "VectorX"               , ,                    ,
+ FLOAT , 0.0       , "VectorY"               , ,                    ,
+ FLOAT , -1.0      , "VectorZ"               , ,                    ,
+ FLOAT , 1.0       , "Field factor"          , ,                    ,
+*PARAMETER TABLE TYPE,  NAME="ABQ_AM_MovingHeatSource_VariableBeadSize", PARAMETERS = 2
+ INTEGER, 5, "ES field ID for height",L,"zero indicates constant bead height"
+ INTEGER, 6, "ES field ID for width",L,"zero indicates constant bead width"
+*PROPERTY TABLE TYPE, NAME="ABQ_AM_AbsorptionCoeff", PROP=1
+ "Absorption coefficient (between 0 and 1)"
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_ThermoMech_PatternBased_Activation", PARAMETERS=13
+ FLOAT,  1.0,       "Slice height",                          L,,
+ FLOAT,  1.0,       "OriAX",                                 L,,
+ FLOAT,  0.0,       "OriAY",                                 L,,
+ FLOAT,  0.0,       "OriAZ",                                 L,,
+ FLOAT,  0.0,       "OriBX",                                 L,,
+ FLOAT,  1.0,       "OriBY",                                 L,,
+ FLOAT,  0.0,       "OriBZ",                                 L,,
+ FLOAT,  0.0,       "OriCX",                                 L,,
+ FLOAT,  0.0,       "OriCY",                                 L,,
+ FLOAT,  0.0,       "OriCZ",                                 L,,
+ FLOAT,  0.0,       "Recoater time",                         T,,
+ FLOAT,  0.0,       "Print start time",                      T,,
+ STRING, "TOTALTIME","Step or total time for print start time",T,"STEPTIME|TOTALTIME",
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_ThermoMech_ScanParameter_Define", Parameters = 4
+ FLOAT, 0.0, "Power",          , ,
+ FLOAT, 0.0, "Width/Hatch/Scan Spacing",          , ,
+ FLOAT, 0.0, "Speed",          , ,
+ FLOAT, 0.0, "OnTimeFraction", , ,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_ThermoMech_PatternBased_Define", PARAMETERS=6
+ FLOAT, 0.0,     "XLocalMin"  ,,
+ FLOAT, 0.0,     "YLocalMin"  ,,
+ FLOAT, 1000.0,  "XLocalMax"  ,,
+ FLOAT, 1000.0,  "YLocalMax"  ,,
+ STRING," ",     "LABEL of a table of type ABQ_AM_ThermoMech_ScanParameter_Define", , ,
+ FLOAT, 0.0,     "Initial in-plane rotation",,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_ThermoMech_PatternBased_ScanStrategy_Define", PARAMETERS=8
+ STRING,  " ", "Pattern"                ,,
+ FLOAT,   0.0, "Relative Rotation Angle",,
+ FLOAT, -1e36, "XMin"                   ,,
+ FLOAT, -1e36, "YMin"                   ,,
+ FLOAT, -1e36, "ZMin"                   ,,
+ FLOAT,  1e36, "XMax"                   ,,
+ FLOAT,  1e36, "YMax"                   ,,
+ FLOAT,  1e36, "ZMax"                   ,,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_ThermoMech_PatternBased_ScanStrategy_Define_Elset", PARAMETERS=3
+ STRING,  " ", "Pattern"                 ,,
+ FLOAT,   0.0, "Relative Rotation Angle" ,,
+ STRING,  " ", "Elset Name"              ,,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_ThermoMech_PatternBased_ScanStrategies", PARAMETERS=1 
+ STRING," ", "Name of table of type ABQ_AM_ThermoMech_PatternBased_ScanStrategy_Define", ,,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_ThermoMech_Activation_Advanced", PARAMETERS=4
+ STRING, "Full", "Element Activation"               , , "Full|Partial",
+ FLOAT,     0.0, "MIN VOL FRAC PARTIAL ACTIVATION"  , , "",    
+ FLOAT,     1.0, "MAX VOL FRAC PARTIAL ACTIVATION"  , , "",     
+ FLOAT,     0.0, "MAX VOL FRAC FULL ACTIVATION"     , , "", 
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_ThermoMech_PatternBased_Advanced", PARAMETERS=2
+ STRING, "SWEEP"  , "Activation technique"              , , "SWEEP|LAYERBYLAYER",
+ INTEGER,        1, "Number of slice per time increment", , ,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_ThermoMech_PatternParameters", PARAMETERS=1 
+ STRING," ", "LABEL of the table collection for ACTIVATE ELEMENT", , ,
+*EVENT SERIES TYPE, NAME="ABQ_AM_HeatSourceTrajectory_RuleID", Fields=1
+ "Rule #"
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_EigenStrain_Method", PARAMETERS=1
+ STRING, "TrajectoryBased", "Activation type", , "PatternBased|TrajectoryBased",
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_EigenStrain_Define", Parameters = 6
+ FLOAT, 0.0, "Eig11", , ,
+ FLOAT, 0.0, "Eig22", , ,
+ FLOAT, 0.0, "Eig33", , ,
+ FLOAT, 0.0, "Eig12", , ,
+ FLOAT, 0.0, "Eig13", , ,
+ FLOAT, 0.0, "Eig23", , ,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_EigenStrain_Activation_Advanced", PARAMETERS=5
+ STRING,  "Full"             , "Element activation" , , "Full|Partial"              ,
+ FLOAT,   0.0                , "Min volume fraction for partial activation", ,      ,
+ FLOAT,   1.0                , "Max volume fraction for partial activation", ,      ,
+ FLOAT,   0.0                , "Max volume fraction for full activation", ,         ,
+ STRING,  "FirstIntersection", "Avg technology"     , , "FirstIntersection|Averaged",
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_EigenStrain_TrajectoryBased_Activation", PARAMETERS = 5
+ STRING, " "    , "Deposition head event series", ,              ,
+ STRING, "Z"    , "Stack direction"             , , "X|Y|Z"      ,
+ FLOAT , 1.0    , "Bead height"                 , ,              ,
+ FLOAT , 1.0    , "Bead width"                  , ,              ,
+ STRING, "Below", "Deposition position"         , , "Below|Above|Middle",
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_EigenStrain_TrajectoryBased_Rule_Define", PARAMETERS=1
+ STRING, " ", "Label of an EigenStrain_Define table", , ,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_EigenStrain_TrajectoryBased_Rules", PARAMETERS=1
+ STRING, " ", "Trajectory rule name", , ,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_EigenStrain_PatternBased_Activation", PARAMETERS=13
+ FLOAT , 1.0         , "Slice height"   , ,                     ,
+ FLOAT , 1.0         , "OriAX"          , ,                     ,
+ FLOAT , 0.0         , "OriAY"          , ,                     ,
+ FLOAT , 0.0         , "OriAZ"          , ,                     ,
+ FLOAT , 0.0         , "OriBX"          , ,                     ,
+ FLOAT , 1.0         , "OriBY"          , ,                     ,
+ FLOAT , 0.0         , "OriBZ"          , ,                     ,
+ FLOAT , 0.0         , "OriCX"          , ,                     ,
+ FLOAT , 0.0         , "OriCY"          , ,                     ,
+ FLOAT , 0.0         , "OriCZ"          , ,                     ,
+ STRING, "TotalTime" , "Total/Step time", , "TotalTime|StepTime",
+ FLOAT , -1e36       , "Start time"     , ,                     ,
+ FLOAT , +1e36       , "End time"       , ,                     ,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_EigenStrain_PatternBased_Define", PARAMETERS=6
+ FLOAT , 0.0   , "xmin"                                , , ,
+ FLOAT , 0.0   , "ymin"                                , , ,
+ FLOAT , 1000.0, "xmax"                                , , ,
+ FLOAT , 1000.0, "ymax"                                , , ,
+ STRING, " "   , "Label of an EigenStrain_Define table", , ,
+ FLOAT , 0.0   , "Local in-plane rotation (in degrees)", , ,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_EigenStrain_PatternBased_ScanStrategy_Define", PARAMETERS=8
+ STRING, " "  , "Pattern"                             , , ,
+ FLOAT , 0.0  , "Relative rotation angle (in degrees)", , ,
+ FLOAT , -1e36, "Xmin"                                , , ,
+ FLOAT , -1e36, "Ymin"                                , , ,
+ FLOAT , -1e36, "Zmin"                                , , ,
+ FLOAT ,  1e36, "Xmax"                                , , ,
+ FLOAT ,  1e36, "Ymax"                                , , ,
+ FLOAT ,  1e36, "Zmax"                                , , ,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_EigenStrain_PatternBased_ScanStrategy_Define_Elset", PARAMETERS=3
+ STRING, " "  , "Pattern"                              , , ,
+ FLOAT , 0.0  , "Relative rotation angle (in degrees)" , , ,
+ STRING, " "  , "Elset Name"                           , , ,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_EigenStrain_PatternBased_ScanStrategies", PARAMETERS=1
+ STRING, " ", "Scan strategy", , ,
+*PARAMETER TABLE TYPE, NAME="ABQ_AM_EigenStrain_PatternBased_Advanced", PARAMETERS=2
+ STRING, "SWEEP", "Activation technique"        , , "SWEEP|LAYERBYLAYER",
+ STRING, "TRUE" , "One slice per time increment", , "TRUE|FALSE"        ,
+*PARAMETER TABLE TYPE,  NAME="ABQ_AM_BladeInterference", PARAMETERS = 2
+FLOAT, 0.0,"Powder Thickness", L,"If the value = 0 then information comes from PTK otherwise this value is used"
+FLOAT, 1.0,"Risk Factor",Dimensionless," "
+*PARAMETER TABLE TYPE,  NAME="ABQ_AM_MaterialDeposition_Bead_Orientation", PARAMETERS = 3
+ FLOAT,0,"Bead orientation x",L,""
+ FLOAT,0,"Bead orientation y",L,""
+ FLOAT,1,"Bead orientation z",L,""
+*PARAMETER TABLE TYPE,  NAME="ABQ_AM_MaterialRemoval_Bead_Orientation", PARAMETERS = 3
+ FLOAT,0,"Removal bead orientation x",L,""
+ FLOAT,0,"Removal bead orientation y",L,""
+ FLOAT,1,"Removal bead orientation z",L,""
+*PARAMETER TABLE TYPE,  NAME="ABQ_AM_MaterialRemoval", PARAMETERS = 1
+ STRING, ,"Event Series",,"Event Series"
+*PARAMETER TABLE TYPE,  NAME="ABQ_AM_MaterialRemoval_Bead", PARAMETERS = 5
+ STRING, ,"Stack Direction",, "X|Y|Z"
+ FLOAT,  ,"Bead Height",L,"Height of the bead deposition cross-section"
+ FLOAT,  ,"Bead Width",L,"Width of the bead deposition cross-section"
+ FLOAT,  ,"Activation Offset",L," "
+ STRING, ,"Deposition Position",,"Below|Above|Middle"
+*PARAMETER TABLE TYPE,  NAME="ABQ_AM_MaterialRemoval_VariableBeadSize", PARAMETERS = 2
+ INTEGER, 5, "ES field ID for height",L,"zero indicates constant bead height"
+ INTEGER, 6, "ES field ID for width",L,"zero indicates constant bead width"
+*PARAMETER TABLE TYPE,  NAME="ABQ_AM_MaterialRemoval_Advanced", PARAMETERS = 5
+ STRING,"Partial","Activation Type",Dimensionless, "Full|Partial"
+ FLOAT,1.0,"Deactivation Threshold",Dimensionless, "For partial activation"
+ FLOAT,1.0,"Max Volume fraction",Dimensionless, "For partial activation"
+ FLOAT,0.0,"Max Volume fraction",Dimensionless, "For full activation"
+ INTEGER,0,"Element subdivision order",Dimensionless, "set to zero for automatic subdivision order"
+*PARAMETER TABLE TYPE,  NAME="ABQ_AM_MaterialDeposition_5AxisStrategy", PARAMETERS = 4
+ STRING,"True","Ignore lead angle/Consider only tilt", , "True|False"
+ INTEGER,2,"ES field ID for normal vector component x",L," "
+ INTEGER,3,"ES field ID for normal vector component y",L," "
+ INTEGER,4,"ES field ID for normal vector component z",L," "
+*PARAMETER TABLE TYPE,  NAME="ABQ_AM_MovingHeatSource_5AxisStrategy", PARAMETERS = 4
+ STRING,"True","Ignore lead angle/Consider only tilt", , "True|False"
+ INTEGER,2,"ES field ID for normal vector component x",L," "
+ INTEGER,3,"ES field ID for normal vector component y",L," "
+ INTEGER,4,"ES field ID for normal vector component z",L," "
+*PARAMETER TABLE TYPE,  NAME="ABQ_AM_MaterialRemoval_5AxisStrategy", PARAMETERS = 4
+ STRING,"True","Ignore lead angle/Consider only tilt", , "True|False"
+ INTEGER,2,"ES field ID for normal vector component x",L," "
+ INTEGER,3,"ES field ID for normal vector component y",L," "
+ INTEGER,4,"ES field ID for normal vector component z",L," "
+*EVENT SERIES TYPE, Fields=4, NAME="ABQ_AM_PowerMagnitude_5AxisStrategy"
+ "Power", ML2T03
+ "ES field ID for normal vector component x",L
+ "ES field ID for normal vector component y",L
+ "ES field ID for normal vector component z",L
+*EVENT SERIES TYPE, Fields=5, NAME="ABQ_AM_PowerMagnitude_5AxisStrategy_width"
+ "Power", ML2T03
+ "ES field ID for normal vector component x",L
+ "ES field ID for normal vector component y",L
+ "ES field ID for normal vector component z",L
+ "ES field ID for width", L
+*EVENT SERIES TYPE, Fields=2, NAME="ABQ_AM_MaterialDeposition_VariableWidth"
+ "On and off", Dimensionless
+ "Width", L
+*EVENT SERIES TYPE, Fields=3, NAME="ABQ_AM_MaterialDeposition_VariableHeightWidth"
+ "On and off", Dimensionless
+ "Height", L
+ "Width", L
+*EVENT SERIES TYPE, Fields=2, NAME="ABQ_AM_MaterialDeposition_VariableHeight"
+ "On and off", Dimensionless
+ "Height", L
+*EVENT SERIES TYPE, Fields=4, NAME="ABQ_AM_MaterialDeposition_5AxisStrategy"
+ "On and off", Dimensionless
+ "ES field ID for normal vector component x",L
+ "ES field ID for normal vector component y",L
+ "ES field ID for normal vector component z",L
+*EVENT SERIES TYPE, Fields=5, NAME="ABQ_AM_MaterialDeposition_5AxisStrategy_width"
+ "On and off", Dimensionless
+ "ES field ID for normal vector component x",L
+ "ES field ID for normal vector component y",L
+ "ES field ID for normal vector component z",L
+ "ES field ID for width", L
+*EVENT SERIES TYPE, Fields=6, NAME="ABQ_AM_MaterialDeposition_5AxisStrategy_VariableCrossSection"
+ "On and off", Dimensionless
+ "ES field ID for normal vector component x",L
+ "ES field ID for normal vector component y",L
+ "ES field ID for normal vector component z",L
+ "ES field ID for height", L
+ "ES field ID for width", L
+*EVENT SERIES TYPE, Fields=6, NAME="ABQ_AM_MovingHeatSource_5AxisStrategy_VariableCrossSection"
+ "Power", ML2T03
+ "ES field ID for normal vector component x",L
+ "ES field ID for normal vector component y",L
+ "ES field ID for normal vector component z",L
+ "ES field ID for height", L
+ "ES field ID for width", L

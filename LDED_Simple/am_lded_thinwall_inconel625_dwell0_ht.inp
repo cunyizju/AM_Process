@@ -1,0 +1,170 @@
+*HEADING
+ Thermal analysis of printing a 42-layer thinwall (LDED, Inconel625) 
+ Inter-layer dwell time 0s
+** Units: <mm,N,tonne,s,Celsius>
+**------------------------------------------------
+*INCLUDE, INPUT=./ABQ_am_special_purpose_types.inp
+**------------------------------------------------
+*INCLUDE, INPUT = mesh_thinwall_ht.inp
+*SOLID SECTION, MATERIAL=Inconel625, ELSET=PartToFabricate
+*SOLID SECTION, MATERIAL=Inconel625, ELSET=Substrate
+*SOLID SECTION, MATERIAL=Aluminum, 	 ELSET=Clamp
+*ELEMENT PROGRESSIVE ACTIVATION, NAME="LDED.Printing", ELSET=PartToFabricate
+**------------------------------------------------
+*PHYSICAL CONSTANTS, ABSOLUTE ZERO=-273.15, STEFAN BOLTZMANN=5.67e-11
+** Stefan Boltzmann constant unit: mW/(mm^2.C^4)
+**------------------------------------------------
+*MATERIAL, NAME=Aluminum
+*DENSITY
+** Unit: tonne/mm^3
+ 2.70e-9
+*CONDUCTIVITY
+** Unit: mW/(mm.C)
+ 237
+*SPECIFIC HEAT
+** Unit: mJ/(tonne.C)
+ 9.1e+8
+**
+*MATERIAL, NAME=Inconel625
+*DENSITY
+** Unit: tonne/mm^3
+ 8.44e-09
+*CONDUCTIVITY
+** Unit: mW/(mm.C)
+  9.9,  20.
+ 10.8,  93.
+ 12.5, 205. 
+ 14.1, 315.
+ 15.7, 425.
+ 17.5, 540.
+ 19.0, 650.
+ 20.8, 760.
+ 22.8, 870.
+*SPECIFIC HEAT
+** Unit: mJ/(tonne.C)
+ 410e+06,  20.
+ 427e+06,  93.
+ 456e+06, 205.
+ 481e+06, 315.
+ 511e+06, 425.
+ 536e+06, 540.
+ 565e+06, 650.
+ 590e+06, 760.
+ 620e+06, 870.
+*LATENT HEAT, SMOOTH
+** Unit: mJ/tonne, C, C
+ 272E9, 1290., 1350., 18.
+**------------------------------------------------
+**Material Deposition
+*PARAMETER
+ beadWidth      = 3.35
+ beadHeight     = 0.9071
+**
+*TABLE COLLECTION, NAME="ABQ_AM.MaterialDeposition"
+*PARAMETER TABLE, TYPE= "ABQ_AM_MaterialDeposition"
+ "LDED.PrintHeadDepositionTrajectory","Bead"
+**
+*PARAMETER TABLE,  TYPE= "ABQ_AM_MaterialDeposition_Bead"
+ "Z", <beadHeight>, <beadWidth>, 0.,"Below"
+**
+*PARAMETER TABLE,  TYPE= "ABQ_AM_MaterialDeposition_Advanced"
+ "Full",0.0,0.0,0.01,,,
+**------------------------------------------------
+**Moving heat source
+*PARAMETER
+ laserSpotRadius            = 2.
+ penetrationDepth           = 1.1
+ GoldakParamA  = laserSpotRadius
+ GoldakParamB  = penetrationDepth
+ GoldakParamCF = laserSpotRadius
+ GoldakParamCR = laserSpotRadius
+ GoldakParamFF = 2*(GoldakParamCF)/(GoldakParamCR+GoldakParamCF)
+ GoldakParamFR = 2*(GoldakParamCR)/(GoldakParamCR+GoldakParamCF)
+**
+*TABLE COLLECTION, NAME="ABQ_AM.EnergyInput"
+*PARAMETER TABLE,  TYPE="ABQ_AM_MovingHeatSource"
+ "LDED.LaserPath","Goldak"
+*PARAMETER TABLE,  TYPE="ABQ_AM_MovingHeatSource_Advanced"
+ "True","False","Relative",0.0,0.0,-1.0, 1.0
+*PARAMETER TABLE,  TYPE="ABQ_AM_MovingHeatSource_Goldak"
+ 10, 10, 10,
+ <GoldakParamA>, <GoldakParamB>, <GoldakParamCF>, <GoldakParamCR>,
+ <GoldakParamFF>, <GoldakParamFR>, 
+ 1.25
+*PROPERTY TABLE, TYPE="ABQ_AM_AbsorptionCoeff"
+ 0.4
+**------------------------------------------------
+*Event Series, Name="LDED.PrintHeadDepositionTrajectory",
+               Type="ABQ_AM_MaterialDeposition",
+               Time=Total, input=./es_thinwall_dwell0.inp
+*Event Series, Name="LDED.LaserPath",
+               Type="ABQ_AM_PowerMagnitude",
+               Time=Total, input=./es_thinwall_dwell0.inp
+**------------------------------------------------
+*INITIAL CONDITIONS,TYPE=TEMPERATURE
+ All, 26.
+**------------------------------------------------
+*STEP,INC=80000, NAME=Printing, UNSYMM=YES, EXTRAPOLATION=NO
+*HEAT TRANSFER
+ 0.5, 600, 0.5e-10,0.5
+*ACTIVATE ELEMENTS,ACTIVATION="LDED.Printing"
+ "ABQ_AM.MaterialDeposition"
+*DFLUX
+ PartAndSubstrate, MBFNU, , "ABQ_AM.EnergyInput"
+*FILM
+ All, FFS, 26., 18e-3
+** Unit: mW/(mm^2.C)
+*RADIATE
+  All, RFS, 26., 0.28
+*OUTPUT,FIELD,FREQ=1
+*NODE OUTPUT
+  NT
+*OUTPUT, HISTORY, FREQ=1
+*NODE OUTPUT, NSET=NOutputTC1
+  NT
+*NODE OUTPUT, NSET=NOutputTC2
+  NT
+*NODE OUTPUT, NSET=NOutputTC3
+  NT
+*END STEP
+**------------------------------------------------
+*STEP, INC=80000, NAME=Cooling, UNSYMM=YES, EXTRAPOLATION=NO
+*HEAT TRANSFER
+  10, 500, 10E-10, 10
+*FILM
+  All, FFS, 26., 18e-3
+** Unit: mW/(mm^2.C)
+*RADIATE
+  All, RFS, 26., 0.28
+*OUTPUT,FIELD,FREQ=1
+*NODE OUTPUT
+  NT
+*OUTPUT, HISTORY, FREQ=1
+*NODE OUTPUT, NSET=NOutputTC1
+ NT
+*NODE OUTPUT, NSET=NOutputTC2
+ NT
+*NODE OUTPUT, NSET=NOutputTC3
+ NT
+*END STEP
+**------------------------------------------------
+*STEP, INC=80000, NAME=MoreCooling, UNSYMM=YES, EXTRAPOLATION=NO
+*HEAT TRANSFER
+ 100, 10000, 100E-10, 100
+*FILM
+ All, FFS, 26., 18e-3
+** Unit: mW/(mm^2.C)
+*RADIATE
+ All, RFS, 26., 0.28
+*OUTPUT,FIELD,FREQ=1
+*NODE OUTPUT
+ NT
+*OUTPUT, HISTORY, FREQ=1
+*NODE OUTPUT, NSET=NOutputTC1
+ NT
+*NODE OUTPUT, NSET=NOutputTC2
+ NT
+*NODE OUTPUT, NSET=NOutputTC3
+ NT
+*END STEP
+**===================================================================

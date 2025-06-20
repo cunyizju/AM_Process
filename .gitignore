@@ -34,6 +34,8 @@
 *.pdb
 *.mdl
 *.txt
+*.cfg
+*.hmx
 # unnecessary files
 *.sta
 *.lck
