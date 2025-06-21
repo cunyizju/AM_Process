@@ -1,4 +1,3 @@
-**HM_UNSUPPORTED_CARDS_START
 *EVENT SERIES TYPE, Fields=1, NAME="ABQ_AM_MaterialDeposition"
  "On/Off state (on=1, off=0) "
 *PARAMETER TABLE TYPE, NAME="ABQ_AM_MaterialDeposition", PARAMETERS=2
