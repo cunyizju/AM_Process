@@ -1,6 +1,6 @@
 *NODE
 *include, input=node.csv
-*ELEMENT,TYPE=DC3D8
+*ELEMENT,TYPE=C3D8
 *include, input=element.csv
 *NSET, NSET=All, GENERATE
          1,     6489,         1
